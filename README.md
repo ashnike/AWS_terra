@@ -12,7 +12,7 @@ To Deploy ask a web application using Infrastructure as Code (IaC) principles on
 
 ### Docker Image
 
-- We will use a docker image from the dockerhub registry `ashniike/aws_s3_webapp`.
+- We will use a docker image from the [dockerhub-registry](https://hub.docker.com/repository/docker/ashniike/aws_s3_webapp/general) `ashniike/aws_s3_webapp`.
 
 ### Environment Variables
 
