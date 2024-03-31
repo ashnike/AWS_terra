@@ -12,7 +12,7 @@ To Deploy ask a web application using Infrastructure as Code (IaC) principles on
 
 ### Docker Image
 
-- We will use a docker image from the docker hub registry `ashniike/aws_s3_webapp`.
+- We will use a docker image from the dockerhub registry `ashniike/aws_s3_webapp`.
 
 ### Environment Variables
 
@@ -26,7 +26,7 @@ Pass the Environment variables to the container at runtime.
 docker run -e S3_BUCKET_NAME=" " -e AWS_REGION=" " -p 8000:8000 ashniike/aws_s3_webapp:latest
 ```
 
-### We will use the IAM role instead of Access ID and Access Key for better security practices.
+### For better security practice, we will use the IAM role instead of Access ID and Secret Key.
 
 Make sure the IAM role has the necessary permissions for S3 operations (e.g., `s3:GetObject`, `s3:PutObject`, etc.) on the specified bucket as given in [ec2.json](https://github.com/ashnike/AWS_terra/blob/main/modules/iamrole/ec2.json).
 
@@ -43,7 +43,7 @@ git clone https://github.com/ashnike/AWS_terra.git
 ```
 terraform apply
 ```
-3. Return to the parent directory, and configure the backend.tf file with resources created in the *environments/backend**.
+3. Return back to the parent directory, and configure the backend.tf file with resources created in the *environments/backend**.
 ```
 terraform {
   backend "s3" {
@@ -57,12 +57,17 @@ terraform {
 5. Configure the name  and the region of the s3-bucket in the [variables](https://github.com/ashnike/AWS_terra/blob/main/modules/s3/variables.tf) file in the s3 module.
 6. Do the same changes in this [policy](https://github.com/ashnike/AWS_terra/blob/main/modules/iamrole/ec2.json). Also, do the same in the [nginx script](https://github.com/ashnike/AWS_terra/blob/main/modules/asg/nginx.sh).
 
-4. Execute the modules using the root main.tf file using the following command from the parent directory.
+7. Execute the provisioning of the modules at the root main.tf file using the following command from the parent directory.
 ```
 terraform apply
 ```
-3. The nameservers will be generated in the [nameservers.txt](https://github.com/ashnike/AWS_terra/blob/main/nameservers.txt) file.
+Confirm the destruction by typing **yes** when prompted.
+8. The nameservers will be generated in the [nameservers.txt](https://github.com/ashnike/AWS_terra/blob/main/nameservers.txt) file.
 
-4. Copy these nameservers as new nameservers records in your hosting provider's domain name records.
-
+9. Copy these nameservers as new nameservers records in your hosting provider's domain name records.
+10. To destroy the provisioned infrastructure and clean up resources. Run the following command to destroy the Infrastructure.
+```
+terraform destroy
+```
+Confirm the destruction by typing **yes** when prompted. Wait for Terraform to remove all resources. 
 
