@@ -39,11 +39,16 @@ Write Terraform scripts to:
 ```
 git clone https://github.com/ashnike/AWS_terra.git
 ```
-2. Enter the **environments/backend** directory and execute the following command to configure the backend to maintain a remote state file in the s3 bucket and dynamo locking using dynamotb table.
+2. Enter the **environments/backend** directory, initialize the following directory using `terraform init `, and execute the following commands to configure the backend to maintain a remote state file in the s3 bucket and dynamo locking using dynamotb table.
+```
+terraform plan
+```
+The above command is used to create an execution plan that outlines the changes Terraform will make to your infrastructure to bring it in line with your configuration files. Running Terraform plan scans the current directory for Terraform configuration files and state data, and then compares the current state to the desired state described in the configuration files.
 ```
 terraform apply
 ```
-3. Return back to the parent directory, and configure the backend.tf file with resources created in the *environments/backend**.
+The Terraform apply is a command used in Terraform to apply the changes defined in your configuration files to your infrastructure. 
+3. Return to the parent directory, and configure the backend.tf file with resources created in the *environments/backend**.
 ```
 terraform {
   backend "s3" {
@@ -54,10 +59,14 @@ terraform {
   }
 }
 ```
-5. Configure the name  and the region of the s3-bucket in the [variables](https://github.com/ashnike/AWS_terra/blob/main/modules/s3/variables.tf) file in the s3 module.
-6. Do the same changes in this [policy](https://github.com/ashnike/AWS_terra/blob/main/modules/iamrole/ec2.json). Also, do the same in the [nginx script](https://github.com/ashnike/AWS_terra/blob/main/modules/asg/nginx.sh).
-
-7. Execute the provisioning of the modules at the root main.tf file using the following command from the parent directory.
+4. Configure the name  and the region of the s3-bucket in the [variables](https://github.com/ashnike/AWS_terra/blob/main/modules/s3/variables.tf) file in the s3 module.
+5. Do the same changes in this [policy](https://github.com/ashnike/AWS_terra/blob/main/modules/iamrole/ec2.json). Also, do the same in the [nginx script](https://github.com/ashnike/AWS_terra/blob/main/modules/asg/nginx.sh).
+6. Initialize the Terraform parent directory using the following command so that Terraform reads the configuration files in the current directory and downloads any necessary plugins for the providers specified in the configuration.
+```
+terraform init
+```
+Followed by the `Terraform plan` to do a dry run to see what changes would be applied.
+7. Execute the provisioning of the modules at the root main.tf file using the following commands from the parent directory.
 ```
 terraform apply
 ```
